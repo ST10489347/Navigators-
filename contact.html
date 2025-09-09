@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Empowering the Nation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Empowering the Nation</h1>
+                <p>Skills Development Training</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="six-month-courses.html">Six-Month Courses</a></li>
+                <li><a href="six-week-courses.html">Six-Week Courses</a></li>
+                <li><a href="fee-calculator.html">Fee Calculator</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="contact">
+            <div class="container">
+                <button onclick="history.back()" class="back-btn">← Back</button>
+                <h2>Contact Us</h2>
+                <p>Get in touch with us for more information about our courses and enrollment</p>
+
+                <div class="contact-content">
+                    <div class="contact-form">
+                        <h3>Send Us a Message</h3>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="contact-name">Full Name:</label>
+                                <input type="text" id="contact-name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-phone">Phone Number:</label>
+                                <input type="tel" id="contact-phone" name="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Email Address:</label>
+                                <input type="email" id="contact-email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject:</label>
+                                <select id="subject" name="subject" required>
+                                    <option value="">Select a subject</option>
+                                    <option value="Course Information">Course Information</option>
+                                    <option value="Enrollment">Enrollment</option>
+                                    <option value="Fee Inquiry">Fee Inquiry</option>
+                                    <option value="General Inquiry">General Inquiry</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message:</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+
+                    <div class="contact-info">
+                        <h3>Our Cape Twon Venues</h3>
+                        
+                        <div class="venue">
+                            <h4>Main Campus - Cape Town Central</h4>
+                            <p><strong>Address:</strong> 123 Skills Development Street, Cape Town Central, 2000</p>
+                            <p><strong>Phone:</strong> +27 12 345 6789</p>
+                            <p><strong>Email:</strong> ETB@empoweringthenation.co.za</p>
+                        </div>
+
+                        <div class="venue">
+                            <h4>Sandton Campus</h4>
+                            <p><strong>Address:</strong> </p>
+                            <p><strong>Phone:</strong> +27 11 765 4321</p>
+                            <p><strong>Email:</strong> ETB@empoweringthenation.co.za</p>
+                        </div>
+
+                        <div class="general-contact">
+                            <h4>General Information</h4>
+                            <p><strong>Main Phone:</strong> +27 12 345 6789</p>
+                            <p><strong>Email:</strong> info@empoweringthenation.co.za</p>
+                            <p><strong>WhatsApp:</strong> +27 12 345 6789</p>
+                            <p><strong>Operating Hours:</strong> Monday - Friday: 8:00 AM - 5:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="maps-section">
+                    <h3>Find Our Locations</h3>
+                    <div class="map-links">
+                        <a href="https://maps.google.com/?q=Johannesburg+Central" target="_blank" class="btn btn-outline">Cape Twon</a>
+                        <a href="https://maps.google.com/?q=Sandton+Johannesburg" target="_blank" class="btn btn-outline">Sandton on Maps</a>
+                        <a href="https://maps.google.com/?q=Soweto+Johannesburg" target="_blank" class="btn btn-outline">Soweto on Maps</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Empowering the Nation. All rights reserved.</p>
+            <p>Founded by Ephraim, TK and Brandon</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('contact-name').value;
+            const phone = document.getElementById('contact-phone').value;
+            const email = document.getElementById('contact-email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            // Basic validation
+            if (!name || !phone || !email || !subject || !message) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Phone validation (basic)
+            const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/;
+            if (!phoneRegex.test(phone)) {
+                alert('Please enter a valid phone number.');
+                return;
+            }
+
+            alert('Thank you for your message! We will get back to you within 24 hours.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

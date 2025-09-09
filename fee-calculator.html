@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Calculator - Empowering the Nation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Empowering the Nation</h1>
+                <p>Skills Development Training</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="six-month-courses.html">Six-Month Courses</a></li>
+                <li><a href="six-week-courses.html">Six-Week Courses</a></li>
+                <li><a href="fee-calculator.html" class="active">Fee Calculator</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="calculator">
+            <div class="container">
+                <button onclick="history.back()" class="back-btn">← Back</button>
+                <h2>Course Fee Calculator</h2>
+                <p>Calculate your total course fees with automatic discounts and VAT</p>
+
+                <form id="fee-calculator-form">
+                    <div class="form-section">
+                        <h3>Your Information</h3>
+                        <div class="form-group">
+                            <label for="name">Full Name:</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number:</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address:</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Select Courses</h3>
+                        <div class="course-selection">
+                            <h4>Six-Month Courses (R1500 each)</h4>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" name="courses" value="First Aid" data-fee="1500">
+                                    First Aid - R1500
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="courses" value="Sewing" data-fee="1500">
+                                    Sewing - R1500
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="courses" value="Landscaping" data-fee="1500">
+                                    Landscaping - R1500
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="courses" value="Life Skills" data-fee="1500">
+                                    Life Skills - R1500
+                                </label>
+                            </div>
+
+                            <h4>Six-Week Courses (R750 each)</h4>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" name="courses" value="Child Minding" data-fee="750">
+                                    Child Minding - R750
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="courses" value="Cooking" data-fee="750">
+                                    Cooking - R750
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="courses" value="Garden Maintenance" data-fee="750">
+                                    Garden Maintenance - R750
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" id="calculate-btn" class="btn btn-primary">Calculate Total Fees</button>
+                </form>
+
+                <div id="quote-result" class="quote-result" style="display: none;">
+                    <h3>Your Course Quote</h3>
+                    <div id="quote-details"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Empowering the Nation. All rights reserved.</p>
+            <p>Founded by Ephraim, TK and Brandon</p>
+        </div>
+    </footer>
+
+    <script>
+        // Load previously selected courses from localStorage
+        window.addEventListener('load', function() {
+            const selectedCourses = JSON.parse(localStorage.getItem('selectedCourses') || '[]');
+            const checkboxes = document.querySelectorAll('input[name="courses"]');
+            
+            checkboxes.forEach(checkbox => {
+                const isSelected = selectedCourses.some(course => course.name === checkbox.value);
+                checkbox.checked = isSelected;
+            });
+        });
+
+        document.getElementById('calculate-btn').addEventListener('click', function() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+
+            if (!name || !phone || !email) {
+                alert('Please fill in all your information fields.');
+                return;
+            }
+
+            const selectedCourses = [];
+            const checkboxes = document.querySelectorAll('input[name="courses"]:checked');
+            
+            checkboxes.forEach(checkbox => {
+                selectedCourses.push({
+                    name: checkbox.value,
+                    fee: parseInt(checkbox.dataset.fee)
+                });
+            });
+
+            if (selectedCourses.length === 0) {
+                alert('Please select at least one course.');
+                return;
+            }
+
+            // Calculate fees
+            const subtotal = selectedCourses.reduce((sum, course) => sum + course.fee, 0);
+            const numCourses = selectedCourses.length;
+            
+            // Apply discounts
+            let discount = 0;
+            let discountText = '';
+            
+            if (numCourses === 1) {
+                discount = 0;
+                discountText = 'No discount';
+            } else if (numCourses === 2) {
+                discount = 0.05;
+                discountText = '5% discount (2 courses)';
+            } else if (numCourses === 3) {
+                discount = 0.10;
+                discountText = '10% discount (3 courses)';
+            } else {
+                discount = 0.15;
+                discountText = '15% discount (3+ courses)';
+            }
+
+            const discountAmount = subtotal * discount;
+            const discountedTotal = subtotal - discountAmount;
+            const vat = discountedTotal * 0.15;
+            const finalTotal = discountedTotal + vat;
+
+            // Display quote
+            const quoteDetails = `
+                <div class="quote-info">
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Phone:</strong> ${phone}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                </div>
+                
+                <div class="quote-breakdown">
+                    <h4>Selected Courses:</h4>
+                    <ul>
+                        ${selectedCourses.map(course => `<li>${course.name} - R${course.fee}</li>`).join('')}
+                    </ul>
+                    
+                    <div class="calculation">
+                        <p>Subtotal: R${subtotal.toFixed(2)}</p>
+                        <p>Discount: ${discountText} - R${discountAmount.toFixed(2)}</p>
+                        <p>After Discount: R${discountedTotal.toFixed(2)}</p>
+                        <p>VAT (15%): R${vat.toFixed(2)}</p>
+                        <p class="total"><strong>Total Amount: R${finalTotal.toFixed(2)}</strong></p>
+                    </div>
+                </div>
+                
+                <div class="quote-actions">
+                    <a href="contact.html" class="btn btn-primary">Contact Us to Proceed</a>
+                    <button onclick="window.print()" class="btn btn-secondary">Print Quote</button>
+                </div>
+            `;
+
+            document.getElementById('quote-details').innerHTML = quoteDetails;
+            document.getElementById('quote-result').style.display = 'block';
+            document.getElementById('quote-result').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
