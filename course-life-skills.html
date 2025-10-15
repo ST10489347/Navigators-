@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Skills Course - Empowering the Nation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Empowering the Nation</h1>
+                <p>Skills Development Training</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="six-month-courses.html">Six-Month Courses</a></li>
+                <li><a href="six-week-courses.html">Six-Week Courses</a></li>
+                <li><a href="fee-calculator.html">Fee Calculator</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="course-detail">
+            <div class="container">
+                <button onclick="history.back()" class="back-btn">← Back to Six-Month Courses</button>
+                
+                <div class="course-header">
+                    <h2>Life Skills</h2>
+                    <p class="course-fee">Course Fee: R1500</p>
+                    <p class="course-duration">Duration: 6 Months</p>
+                </div>
+
+                <div class="course-content">
+                    <div class="course-info">
+                        <h3>Course Purpose</h3>
+                        <p>Develop essential personal and professional skills for success in the workplace and everyday life. This comprehensive course focuses on communication, interpersonal skills, and personal development to enhance employability and career advancement opportunities.</p>
+
+                        <h3>Course Content</h3>
+                        <ul>
+                            <li>Effective communication skills</li>
+                            <li>Professional workplace behavior</li>
+                            <li>Time management and organization</li>
+                            <li>Problem-solving techniques</li>
+                            <li>Teamwork and collaboration</li>
+                            <li>Conflict resolution</li>
+                            <li>Financial literacy and budgeting</li>
+                            <li>Goal setting and achievement</li>
+                            <li>Interview skills and CV writing</li>
+                            <li>Personal branding and confidence building</li>
+                        </ul>
+
+                        <h3>What You'll Gain</h3>
+                        <ul>
+                            <li>Life skills certificate</li>
+                            <li>Enhanced employability across sectors</li>
+                            <li>Improved personal confidence</li>
+                            <li>Better workplace relationships</li>
+                            <li>Leadership and management potential</li>
+                        </ul>
+                    </div>
+
+                    <div class="course-action">
+                        <div class="selection-box">
+                            <label>
+                                <input type="checkbox" id="life-skills-selection" data-course="Life Skills" data-fee="1500">
+                                Select this course for quote calculation
+                            </label>
+                        </div>
+                        <a href="fee-calculator.html" class="btn btn-primary">Go to Fee Calculator</a>
+                        <a href="contact.html" class="btn btn-secondary">Contact Us for More Info</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Empowering the Nation. All rights reserved.</p>
+            <p>Founded by Ephraim, TK and Brandon</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('life-skills-selection').addEventListener('change', function() {
+            let selectedCourses = JSON.parse(localStorage.getItem('selectedCourses') || '[]');
+            
+            if (this.checked) {
+                selectedCourses.push({
+                    name: this.dataset.course,
+                    fee: parseInt(this.dataset.fee)
+                });
+            } else {
+                selectedCourses = selectedCourses.filter(course => course.name !== this.dataset.course);
+            }
+            
+            localStorage.setItem('selectedCourses', JSON.stringify(selectedCourses));
+        });
+
+        window.addEventListener('load', function() {
+            let selectedCourses = JSON.parse(localStorage.getItem('selectedCourses') || '[]');
+            let isSelected = selectedCourses.some(course => course.name === 'Life Skills');
+            document.getElementById('life-skills-selection').checked = isSelected;
+        });
+    </script>
+</body>
+</html>
